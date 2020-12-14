@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConeDrawer : MonoBehaviour
 {
     public Vector3 BaseCenter;
     public int BaseRadius;
     public int Height;
+    public InputField NumberOfVoxels;
 
     private const int _topRadius = 0;
     private BresenhamDrawer _drawer;
@@ -88,7 +90,10 @@ public class ConeDrawer : MonoBehaviour
             points.AddRange(_drawer.DrawCircle(baseCenter, baseRadius, fill: true));
         }
 
-        foreach (var point in points.Distinct())
+        points = points.Distinct().ToList();
+        NumberOfVoxels.text = points.Count.ToString();
+
+        foreach (var point in points)
         {
             _voxels.PutVoxel(point);
         }
